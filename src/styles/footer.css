@@ -1,0 +1,148 @@
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 4rem 2.5rem 3rem;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--scrim-heavy);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer__logo {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.footer__name {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--grey);
+}
+
+.footer__links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover {
+  color: var(--text);
+}
+
+.footer__link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
+.footer__link-arrow {
+  font-size: 0.9em;
+  color: var(--grey);
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover .footer__link-arrow {
+  color: var(--text);
+}
+
+.footer__divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer__copy,
+.footer__tagline,
+.footer__location {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--mid-grey);
+  letter-spacing: 0.05em;
+}
+
+.footer__tagline {
+  text-align: center;
+}
+
+.footer__location {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem 1.5rem 2rem;
+  }
+
+  .footer__top {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer__links {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .footer__tagline,
+  .footer__location {
+    text-align: center;
+  }
+}

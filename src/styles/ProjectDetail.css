@@ -1,0 +1,337 @@
+.pd-main {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+/* ── Back link ─────────────────────────────────────────── */
+.pd-back {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem 3rem;
+}
+
+.pd-back__link {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.pd-back__link:hover {
+  color: var(--text);
+}
+
+/* ── Hero ──────────────────────────────────────────────── */
+.pd-hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pd-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.pd-hero__id,
+.pd-hero__year {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.pd-hero__title-line {
+  overflow: hidden;
+}
+
+.pd-hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0 0 2.5rem;
+}
+
+.pd-hero__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.pd-hero__tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--grey);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.75rem;
+  white-space: nowrap;
+}
+
+.pd-hero__description {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--grey);
+  line-height: 1.8;
+  max-width: 65ch;
+  margin-bottom: 2.5rem;
+}
+
+.pd-hero__links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
+.pd-btn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pd-btn--primary {
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+}
+
+.pd-btn--primary:hover {
+  background: transparent;
+  color: var(--text);
+}
+
+.pd-btn--secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.pd-btn--secondary:hover {
+  border-color: var(--text);
+}
+
+/* ── Preview image ─────────────────────────────────────── */
+.pd-preview {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem;
+}
+
+.pd-preview img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Content sections ──────────────────────────────────── */
+.pd-sections {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.pd-section {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.pd-section__label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  padding-top: 0.3rem;
+}
+
+.pd-section__content p {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.9;
+  max-width: 70ch;
+}
+
+/* ── Version History ────────────────────────────────────── */
+.pd-versions {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.pd-versions__heading {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 2.5rem;
+}
+
+.pd-version__row {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto auto;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  padding: 1.5rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.pd-version__row:hover {
+  opacity: 0.7;
+}
+
+.pd-version__num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--mid-grey);
+  flex-shrink: 0;
+}
+
+.pd-version__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.pd-version__date {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--grey);
+  white-space: nowrap;
+}
+
+.pd-version__chevron {
+  display: flex;
+  align-items: center;
+  color: var(--grey);
+  flex-shrink: 0;
+}
+
+.pd-version__body {
+  overflow: hidden;
+}
+
+.pd-version__desc {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--grey);
+  line-height: 1.8;
+  max-width: 65ch;
+  padding: 0 0 1.75rem calc(3.5rem + 2rem);
+}
+
+.pd-version__divider {
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── 404 ───────────────────────────────────────────────── */
+.pd-not-found {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--grey);
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pd-main {
+    padding-top: 6rem;
+    padding-bottom: 5rem;
+  }
+
+  .pd-back,
+  .pd-preview,
+  .pd-sections,
+  .pd-versions {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .pd-hero {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .pd-hero__title {
+    font-size: clamp(2rem, 10vw, 4rem);
+  }
+
+  .pd-section {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 2.5rem 0;
+  }
+
+  .pd-preview {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .pd-versions {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .pd-version__row {
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1rem;
+  }
+
+  .pd-version__date {
+    display: none;
+  }
+
+  .pd-version__desc {
+    padding-left: calc(3rem + 1rem);
+  }
+}
+
+@media (max-width: 375px) {
+  .pd-hero__title {
+    font-size: 1.9rem;
+  }
+}

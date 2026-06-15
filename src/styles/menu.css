@@ -1,0 +1,146 @@
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background-color: var(--overlay-bg);
+  will-change: clip-path;
+}
+
+.menu-overlay__logo {
+  position: absolute;
+  top: 1.5rem;
+  left: 2.5rem;
+  z-index: 1;
+}
+
+.menu-overlay__logo-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+/* Nav links - scrolls top-down, with padding-bottom so it never hits the meta bar */
+.menu-overlay__nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 8rem 2.5rem 10rem;
+  overflow-y: auto;
+}
+
+.menu-overlay__link-wrapper {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  padding: 0.9rem 0;
+}
+
+.menu-overlay__link-wrapper:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.menu-overlay__link {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-align: left;
+  padding: 0;
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+.menu-overlay__link:hover {
+  opacity: 0.45;
+}
+
+.menu-overlay__link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
+.menu-overlay__link-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--mid-grey);
+  padding-bottom: 0.3rem;
+}
+
+/* Meta bar - fixed to the bottom of the overlay, never overlaps links */
+.menu-overlay__meta {
+  position: absolute;
+  bottom: 2rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.menu-overlay__meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.menu-overlay__meta-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--grey);
+}
+
+.menu-overlay__meta-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--off-white);
+  transition: color 0.2s ease;
+}
+
+a.menu-overlay__meta-value:hover {
+  color: var(--text);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-overlay__logo {
+    top: 1.25rem;
+    left: 1.5rem;
+  }
+
+  .menu-overlay__nav {
+    padding: 7rem 1.5rem 10rem;
+  }
+
+  .menu-overlay__link {
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+  }
+
+  .menu-overlay__meta {
+    left: 1.5rem;
+    right: 1.5rem;
+    gap: 2rem;
+  }
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# ⚠️ Update this domain after Vercel deployment is confirmed
+Sitemap: https://amanbansal.vercel.app/sitemap.xml

@@ -1,0 +1,42 @@
+.nf-main {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 2.5rem;
+  background-color: var(--bg);
+}
+
+.nf-code {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(6rem, 20vw, 14rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0;
+}
+
+.nf-message {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin: 1.5rem 0 2.5rem;
+}
+
+.nf-back {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  transition: color 0.2s ease;
+}
+
+.nf-back:hover {
+  color: var(--text);
+}

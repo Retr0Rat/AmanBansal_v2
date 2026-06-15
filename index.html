@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Aman Bansal" />
+    <meta name="description" content="Building intelligent systems at the intersection of AI, security, and software. Based in Oshawa, ON." />
+    <title>Aman Bansal</title>
+
+    <!-- Security headers
+         Note: X-Frame-Options and frame-ancestors are header-only — set in vercel.json (prod) and vite server.headers (dev).
+         connect-src uses %VITE_API_URL% so Vite substitutes the correct backend URL at build time. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://www.google-analytics.com; connect-src 'self' %VITE_API_URL% https://www.google-analytics.com https://region1.google-analytics.com; frame-src 'none'; object-src 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- OpenGraph -->
+    <meta property="og:title" content="Aman Bansal — Full-Stack Developer · AI Engineer · Cybersecurity" />
+    <meta property="og:description" content="Building intelligent systems at the intersection of AI, security, and software. Based in Oshawa, ON." />
+    <meta property="og:type" content="website" />
+    <!-- TODO: Replace with real Vercel domain after deployment -->
+    <meta property="og:url" content="https://amanbansal.vercel.app/" />
+    <link rel="canonical" href="https://amanbansal.vercel.app/" />
+    <!-- TODO: Add og-cover.png to /public (1200x630px)
+         Screenshot the hero section, save as og-cover.png
+         Social sharing is broken until this file exists -->
+    <meta property="og:image" content="/og-cover.png" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aman Bansal — Full-Stack Developer · AI Engineer · Cybersecurity" />
+    <meta name="twitter:description" content="Building intelligent systems at the intersection of AI, security, and software. Based in Oshawa, ON." />
+    <meta name="twitter:image" content="/og-cover.png" />
+
+    <!-- Theme: apply saved preference before first paint to prevent flash -->
+    <script>
+      (function () {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.classList.add('light-theme')
+        }
+      })()
+    </script>
+
+<!-- Google Analytics — uncomment and replace G-XXXXXXXXXX with your real GA4 ID
+         Get your free ID at analytics.google.com (takes ~5 minutes to set up) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8XWT103NYV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8XWT103NYV');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=JetBrains+Mono:wght@400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

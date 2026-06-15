@@ -1,0 +1,248 @@
+.projects {
+  padding: 8rem 2.5rem;
+  position: relative;
+  border-top: 1px solid var(--border);
+  background-color: var(--bg);
+}
+
+.projects::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.projects__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.projects__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.projects__tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  font-weight: 400;
+}
+
+.projects__count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--mid-grey);
+  font-weight: 400;
+}
+
+.projects__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-row {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  will-change: opacity, transform;
+  color: inherit;
+}
+
+.project-row__inner {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem 0;
+  transition: opacity 0.25s ease;
+}
+
+/* Dim non-hovered rows */
+.projects__list:has(.project-row:hover) .project-row:not(:hover) .project-row__inner {
+  opacity: 0.3;
+}
+
+/* ── Number ↔ Arrow wrapper ──────────────────────────── */
+.project-row__id-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 3rem;
+  height: 1.5rem;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+
+.project-row__id {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--mid-grey);
+  letter-spacing: 0.05em;
+  line-height: 1.5rem;
+  white-space: nowrap;
+}
+
+.project-row__id--arrow {
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  line-height: 1.4rem;
+}
+
+.project-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-row__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0;
+}
+
+.project-row__desc {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--grey);
+  line-height: 1.6;
+  max-width: 55ch;
+}
+
+.project-row__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  min-width: 180px;
+}
+
+.project-row__stack {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--grey);
+  text-align: right;
+}
+
+.project-row__year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--mid-grey);
+  letter-spacing: 0.05em;
+}
+
+.project-row__divider {
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Footer row ─────────────────────────────────────── */
+.projects__footer-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.projects__footer-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.projects__more-btn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.projects__more-btn:hover {
+  color: var(--text);
+}
+
+/* Cursor-following image */
+.projects__cursor-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 50;
+  width: 300px;
+  height: 200px;
+}
+
+.projects__cursor-img-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.projects__cursor-img-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .projects {
+    padding: 5rem 1.5rem;
+  }
+
+  .project-row__inner {
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+
+  .project-row__right {
+    display: none;
+  }
+
+  .projects__footer-line {
+    display: none;
+  }
+
+  .projects__more-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 0;
+    border: 1px solid var(--border);
+  }
+
+  .projects__cursor-img {
+    display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .project-row__title {
+    font-size: 1.3rem;
+  }
+}
