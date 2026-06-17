@@ -73,7 +73,7 @@ export default function Connect() {
       }
     } catch (err) {
       setError(
-        'Could not reach the server. Email me directly at aman.bansal1@dcmail.ca'
+        'Could not reach the server. Please try again or use the Send Email button above.'
       )
     } finally {
       setLoading(false)

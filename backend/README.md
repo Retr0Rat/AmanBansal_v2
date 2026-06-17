@@ -25,8 +25,7 @@ the Aman Bansal portfolio contact form.
    - Go to App Passwords
    - Generate password for "Mail"
    - Use that 16-character password as EMAIL_PASS
-   Note: Use aman.bansal1@dcmail.ca — check if DC mail
-   supports Gmail SMTP or use a Gmail account as relay
+   Note: Use the Gmail address set as EMAIL_USER in your .env
 
 4. Run locally:
    npm run dev
@@ -50,8 +49,8 @@ Returns: { status: 'ok', timestamp }
 
 PORT          — server port (Railway sets this auto)
 MONGODB_URI   — MongoDB Atlas connection string
-EMAIL_USER    — aman.bansal1@dcmail.ca
+EMAIL_USER    — Gmail address used to send emails
 EMAIL_PASS    — Gmail app password (16 chars)
-EMAIL_TO      — aman.bansal1@dcmail.ca
-FRONTEND_URL  — https://retr0rat.github.io
+EMAIL_TO      — Email that receives contact form submissions
+FRONTEND_URL  — your Vercel domain
 NODE_ENV      — production

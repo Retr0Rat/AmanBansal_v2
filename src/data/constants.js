@@ -1,5 +1,5 @@
 export const CONTACT = {
-  email: 'probansalaman03@gmail.com',
+  email: import.meta.env.VITE_CONTACT_EMAIL || '',
   github: 'https://github.com/Retr0Rat',
   githubDisplay: 'github.com/Retr0Rat',
   linkedin: 'https://www.linkedin.com/in/aman-bansal-15b986204/',
