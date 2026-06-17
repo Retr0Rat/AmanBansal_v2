@@ -58,17 +58,25 @@ export default function Connect() {
     setError(false)
 
     try {
+      console.log('Sending form data:', {
+        name: form.name,
+        email: form.email,
+        subject: form.subject,
+        message: form.message,
+        website: form.website
+      })
+
       const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
       })
 
-      const data = await response.json()
-
       if (response.ok) {
         setSubmitted(true)
       } else {
+        const data = await response.json()
+        console.error('Server error:', data)
         setError(data.error || 'Something went wrong.')
       }
     } catch (err) {
