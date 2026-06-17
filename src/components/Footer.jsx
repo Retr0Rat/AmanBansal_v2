@@ -8,8 +8,8 @@ const MotionLink = motion.create(Link)
 
 const LINKS = [
   { label: 'GitHub', href: CONTACT.github, external: true },
-  { label: 'LinkedIn', href: CONTACT.linkedin, external: true },
   { label: 'Resume', href: '/resume', external: false },
+  { label: 'Connect', href: '/connect', external: false },
 ]
 
 const EASE = [0.16, 1, 0.3, 1]
