@@ -137,8 +137,8 @@ export default function MenuOverlay({ onClose, scrollTo }) {
         </div>
         <div className="menu-overlay__meta-col">
           <p className="menu-overlay__meta-label">Contact</p>
-          <a className="menu-overlay__meta-value" href={`mailto:${CONTACT.email}`}>
-            {CONTACT.email}
+          <a className="menu-overlay__meta-value" href="mailto:probansalaman03@gmail.com">
+            probansalaman03@gmail.com
           </a>
         </div>
         <div className="menu-overlay__meta-col">
