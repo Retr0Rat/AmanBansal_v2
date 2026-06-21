@@ -134,8 +134,12 @@ function CanvasBackground({ ready, spaceshipActive }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+  if (isMobile && location.pathname === '/about') return null
+
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', touchAction: 'none' }}>
       {showCanvas && (
         <CanvasReveal
           starColor={starColor}
@@ -205,6 +209,8 @@ function HashScrollHandler() {
 // on pages that have their own background-color set.
 function BackgroundOverlay() {
   const { pathname } = useLocation()
+  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+  if (isMobile && pathname === '/about') return null
   return (
     <div
       aria-hidden="true"
@@ -213,6 +219,7 @@ function BackgroundOverlay() {
         inset: 0,
         zIndex: 1,
         pointerEvents: 'none',
+        touchAction: 'none',
         background: 'var(--bg)',
         opacity: pathname === '/' || pathname === '/about' || pathname === '/connect' || pathname.startsWith('/blog') || pathname === '/resume' || pathname.startsWith('/projects') ? 0 : 1,
         transition: 'opacity 0.4s ease',

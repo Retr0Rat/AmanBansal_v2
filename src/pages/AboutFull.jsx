@@ -467,23 +467,23 @@ export default function AboutFull() {
 
   useEffect(() => {
     const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-
     if (!isMobile) return
 
     if (window.__lenis) {
-      window.__lenis.stop()
+      window.__lenis.destroy()
+      window.__lenis = null
     }
 
+    document.documentElement.classList.remove(
+      'lenis', 'lenis-scrolling', 'lenis-scrollin',
+      'lenis-stopped', 'lenis-smooth'
+    )
     document.documentElement.style.overflowY = 'auto'
+    document.documentElement.style.overflow = ''
     document.body.style.overflowY = 'auto'
-    document.documentElement.style.position = ''
-    document.body.style.position = ''
+    document.body.style.overflow = ''
 
-    return () => {
-      if (window.__lenis) {
-        window.__lenis.start()
-      }
-    }
+    return () => {}
   }, [])
 
   useEffect(() => { window.scrollTo(0, 0) }, [])
@@ -502,21 +502,28 @@ export default function AboutFull() {
   useEffect(() => {
     if (!heroUnlocked) return
 
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+    if (isMobile) {
+      document.documentElement.style.overflowY = 'auto'
+      document.body.style.overflowY = 'auto'
+      return () => {}
+    }
+
+    // Desktop only
     const lenis = new Lenis({
       autoRaf: false,
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: true,
-      touchMultiplier: 2,
+      smoothTouch: false,
     })
     lenisRef.current = lenis
     window.__lenis = lenis
 
     const rafFn = (time) => { lenis.raf(time * 1000) }
     lenis.on('scroll', () => { ScrollTrigger.update() })
-    gsap.ticker.wake()
     gsap.ticker.add(rafFn)
     gsap.ticker.lagSmoothing(0)
 
@@ -581,6 +588,89 @@ export default function AboutFull() {
       clearTimeout(t3)
       clearTimeout(t4)
     }
+  }, [heroUnlocked])
+
+  useEffect(() => {
+    if (!heroUnlocked) return
+
+    setTimeout(() => {
+      const all = document.querySelectorAll('*')
+      const blockers = []
+
+      all.forEach(el => {
+        const style = getComputedStyle(el)
+        const rect = el.getBoundingClientRect()
+
+        if (
+          (style.position === 'fixed' ||
+           style.position === 'absolute') &&
+          rect.width > 200 &&
+          rect.height > 200 &&
+          style.display !== 'none' &&
+          style.visibility !== 'hidden'
+        ) {
+          blockers.push({
+            tag: el.tagName,
+            cls: el.className.toString().substring(0,30),
+            w: Math.round(rect.width),
+            h: Math.round(rect.height),
+            top: Math.round(rect.top),
+            z: style.zIndex,
+            pe: style.pointerEvents,
+            ta: style.touchAction
+          })
+        }
+      })
+
+      const div = document.createElement('div')
+      div.style.cssText = `
+        position:fixed;top:0;left:0;right:0;
+        background:rgba(0,0,0,0.95);color:#00ff00;
+        font-size:9px;padding:6px;z-index:99999;
+        font-family:monospace;max-height:60vh;
+        overflow-y:auto;line-height:1.6;
+      `
+      div.innerHTML = '<b>FIXED/ABS ELEMENTS:</b><br>' +
+        blockers.map(b =>
+          `${b.tag} .${b.cls} | ${b.w}x${b.h} ` +
+          `top:${b.top} z:${b.z} ` +
+          `pe:${b.pe} ta:${b.ta}`
+        ).join('<br>')
+      document.body.appendChild(div)
+      setTimeout(() => div.remove(), 20000)
+    }, 1000)
+  }, [heroUnlocked])
+
+  useEffect(() => {
+    if (!heroUnlocked) return
+    setTimeout(() => {
+      const div = document.createElement('div')
+      div.style.cssText = `
+        position:fixed;bottom:0;left:0;right:0;
+        background:rgba(0,0,0,0.95);color:#00ff00;
+        font-size:9px;padding:6px;z-index:99999;
+        font-family:monospace;line-height:1.6;
+      `
+      const root = document.querySelector('#root')
+      const els = [
+        ['HTML', document.documentElement],
+        ['BODY', document.body],
+        ['ROOT', root],
+      ].filter(([n, el]) => el)
+
+      div.innerHTML = els.map(([name, el]) => {
+        const s = getComputedStyle(el)
+        const rect = el.getBoundingClientRect()
+        return `${name} | h:${s.height} | ` +
+          `maxH:${s.maxHeight} | ` +
+          `rectH:${Math.round(rect.height)} | ` +
+          `scrollH:${el.scrollHeight} | ` +
+          `pos:${s.position} | ta:${s.touchAction}`
+      }).join('<br>')
+
+      document.body.appendChild(div)
+      setTimeout(() => div.remove(), 20000)
+    }, 1500)
   }, [heroUnlocked])
 
   // Timeline scroll-in - IntersectionObserver to avoid Lenis/ScrollTrigger conflict on mobile
