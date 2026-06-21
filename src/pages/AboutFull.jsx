@@ -494,22 +494,14 @@ export default function AboutFull() {
   useEffect(() => {
     if (!heroUnlocked) return
 
-    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-
-    if (isMobile) {
-      document.documentElement.style.overflowY = 'auto'
-      document.body.style.overflowY = 'auto'
-      return () => {}
-    }
-
-    // Desktop only: use Lenis
     const lenis = new Lenis({
       autoRaf: false,
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false,
+      smoothTouch: true,
+      touchMultiplier: 2,
     })
     lenisRef.current = lenis
     window.__lenis = lenis
