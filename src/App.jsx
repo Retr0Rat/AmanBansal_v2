@@ -231,18 +231,25 @@ const pageTransition = { duration: 0.35, ease: 'easeInOut' }
 
 function AnimatedRoutes() {
   const location = useLocation()
+  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+  const isAbout = location.pathname === '/about'
 
   return (
     <Suspense fallback={null}>
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
+          variants={isMobile && isAbout ? {} : pageVariants}
+          initial={isMobile && isAbout ? false : 'initial'}
+          animate={isMobile && isAbout ? {} : 'animate'}
+          exit={isMobile && isAbout ? {} : 'exit'}
           transition={pageTransition}
-          style={{ position: 'relative', zIndex: 2 }}
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            transform: isMobile && isAbout ? 'none' : undefined,
+            willChange: isMobile && isAbout ? 'auto' : undefined,
+          }}
         >
           <Routes location={location}>
             <Route path="/" element={<HomePage />} />

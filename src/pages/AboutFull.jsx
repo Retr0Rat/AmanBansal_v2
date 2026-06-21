@@ -195,12 +195,23 @@ function ScrollExpandHero({ onUnlock }) {
   // Re-mount immediately if the user scrolls back and triggers a re-collapse.
   useEffect(() => {
     if (!unlocked) { setMounted(true); return }
+
     const sehEl = document.querySelector('.seh')
     if (sehEl) {
       sehEl.style.touchAction = 'auto'
       sehEl.style.pointerEvents = 'none'
+      sehEl.style.display = 'none'
+      sehEl.style.visibility = 'hidden'
+      sehEl.style.zIndex = '-1'
     }
-    const t = setTimeout(() => setMounted(false), 0)
+
+    const sehChildren = document.querySelectorAll('.seh, .seh *')
+    sehChildren.forEach(el => {
+      el.style.pointerEvents = 'none'
+      el.style.touchAction = 'auto'
+    })
+
+    const t = setTimeout(() => setMounted(false), 400)
     return () => clearTimeout(t)
   }, [unlocked])
 
@@ -362,7 +373,7 @@ function ScrollExpandHero({ onUnlock }) {
     <motion.section
       ref={sehRef}
       className="seh"
-      style={{ y: heroY, pointerEvents: unlocked ? 'none' : 'auto', touchAction: unlocked ? 'auto' : 'none' }}
+      style={{ y: heroY, pointerEvents: unlocked ? 'none' : 'auto', touchAction: unlocked ? 'auto' : 'none', zIndex: unlocked ? -1 : 10, visibility: unlocked ? 'hidden' : 'visible' }}
       aria-label="About Aman Bansal"
     >
       {/* 1. Background - fades in first with a gentle de-zoom */}
@@ -463,15 +474,12 @@ export default function AboutFull() {
       window.__lenis.stop()
     }
 
-    gsap.ticker.sleep()
-
     document.documentElement.style.overflowY = 'auto'
     document.body.style.overflowY = 'auto'
     document.documentElement.style.position = ''
     document.body.style.position = ''
 
     return () => {
-      gsap.ticker.wake()
       if (window.__lenis) {
         window.__lenis.start()
       }
@@ -508,6 +516,7 @@ export default function AboutFull() {
 
     const rafFn = (time) => { lenis.raf(time * 1000) }
     lenis.on('scroll', () => { ScrollTrigger.update() })
+    gsap.ticker.wake()
     gsap.ticker.add(rafFn)
     gsap.ticker.lagSmoothing(0)
 
