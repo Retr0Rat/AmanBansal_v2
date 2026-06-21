@@ -82,30 +82,24 @@ const TIMELINE = [
 function ScrubbedText({ text, className }) {
   const containerRef = useRef(null)
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const words = containerRef.current.querySelectorAll('.af-word')
-
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          gsap.fromTo(
-            words,
-            { opacity: 0.1, y: 8 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              stagger: 0.03,
-              ease: 'power2.out',
-              overwrite: true
-            }
-          )
-        }
-      })
-    }, containerRef)
-    return () => ctx.revert()
+    const words = containerRef.current?.querySelectorAll('.af-word')
+    if (!words?.length) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gsap.fromTo(words,
+              { opacity: 0.1, y: 8 },
+              { opacity: 1, y: 0, duration: 0.6, stagger: 0.03, ease: 'power2.out', overwrite: true }
+            )
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+    observer.observe(containerRef.current)
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -165,33 +159,34 @@ function ScrollExpandHero({ onUnlock }) {
     unlockedRef.current = true
     unlockTimeRef.current = Date.now()
     setUnlocked(true)
+
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
     const seh = document.querySelector('.seh')
     if (seh) {
-      seh.style.touchAction = 'auto'
-      seh.style.pointerEvents = 'none'
       seh.style.display = 'none'
+      seh.style.pointerEvents = 'none'
     }
-    document.documentElement.style.touchAction = 'auto'
-    document.body.style.touchAction = 'auto'
-    document.documentElement.style.overflow = ''
-    document.body.style.overflow = ''
-    document.documentElement.style.overscrollBehavior = 'none'
-    document.body.style.overscrollBehavior = 'none'
+
+    document.documentElement.style.height = ''
+    document.documentElement.style.position = ''
+    document.documentElement.style.touchAction = ''
+    document.body.style.height = ''
+    document.body.style.position = ''
+    document.body.style.touchAction = ''
+
+    if (isMobile) {
+      setTimeout(() => {
+        ScrollTrigger.refresh()
+        document.documentElement.getBoundingClientRect()
+      }, 150)
+    }
+
     if (window.__lenis) {
       window.__lenis.start()
       window.__lenis.resize()
     }
-    // Force browser to re-evaluate page scrollability after hero exits
-    setTimeout(() => {
-      document.documentElement.style.touchAction = ''
-      document.body.style.touchAction = ''
-      document.documentElement.style.overflow = 'auto'
-      document.body.style.overflow = 'auto'
-      requestAnimationFrame(() => {
-        document.documentElement.style.overflow = ''
-        document.body.style.overflow = ''
-      })
-    }, 100)
+
     onUnlock?.()
   }
 
@@ -205,7 +200,7 @@ function ScrollExpandHero({ onUnlock }) {
       sehEl.style.touchAction = 'auto'
       sehEl.style.pointerEvents = 'none'
     }
-    const t = setTimeout(() => setMounted(false), 50)
+    const t = setTimeout(() => setMounted(false), 0)
     return () => clearTimeout(t)
   }, [unlocked])
 
@@ -367,7 +362,7 @@ function ScrollExpandHero({ onUnlock }) {
     <motion.section
       ref={sehRef}
       className="seh"
-      style={{ y: heroY, pointerEvents: unlocked ? 'none' : 'auto' }}
+      style={{ y: heroY, pointerEvents: unlocked ? 'none' : 'auto', touchAction: unlocked ? 'auto' : 'none' }}
       aria-label="About Aman Bansal"
     >
       {/* 1. Background - fades in first with a gentle de-zoom */}
@@ -459,6 +454,30 @@ export default function AboutFull() {
   const entryRefs                   = useRef([])
   const lenisRef                    = useRef(null)
 
+  useEffect(() => {
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+    if (!isMobile) return
+
+    if (window.__lenis) {
+      window.__lenis.stop()
+    }
+
+    gsap.ticker.sleep()
+
+    document.documentElement.style.overflowY = 'auto'
+    document.body.style.overflowY = 'auto'
+    document.documentElement.style.position = ''
+    document.body.style.position = ''
+
+    return () => {
+      gsap.ticker.wake()
+      if (window.__lenis) {
+        window.__lenis.start()
+      }
+    }
+  }, [])
+
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   // Prevent Chrome Android pull-to-refresh and overscroll bounce for the
@@ -472,10 +491,18 @@ export default function AboutFull() {
     }
   }, [])
 
-  // Init Lenis after SEH unlocks; refresh ScrollTrigger once portal unmounts (50 ms)
   useEffect(() => {
     if (!heroUnlocked) return
 
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+    if (isMobile) {
+      document.documentElement.style.overflowY = 'auto'
+      document.body.style.overflowY = 'auto'
+      return () => {}
+    }
+
+    // Desktop only: use Lenis
     const lenis = new Lenis({
       autoRaf: false,
       duration: 1.4,
@@ -492,17 +519,6 @@ export default function AboutFull() {
     gsap.ticker.add(rafFn)
     gsap.ticker.lagSmoothing(0)
 
-    // smoothTouch: false means Lenis defers to native scroll on mobile —
-    // blank out any explicit touchAction/overflow so the browser treats the page as scrollable
-    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-    if (isMobile) {
-      document.documentElement.style.touchAction = ''
-      document.body.style.touchAction = ''
-      document.documentElement.style.overflow = ''
-      document.body.style.overflow = ''
-      document.documentElement.getBoundingClientRect()
-    }
-
     const t = setTimeout(() => ScrollTrigger.refresh(), 100)
 
     return () => {
@@ -513,32 +529,80 @@ export default function AboutFull() {
     }
   }, [heroUnlocked])
 
-  // Timeline scroll-in - About.jsx stats pattern
   useEffect(() => {
-    const mm = gsap.matchMedia()
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      const ctx = gsap.context(() => {
-        entryRefs.current.forEach((entry) => {
-          if (!entry) return
-          gsap.fromTo(
-            entry,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1, y: 0,
-              duration: 0.7,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: entry,
-                start: 'top 80%',
-                toggleActions: 'play reverse play reverse',
-              },
-            }
-          )
-        })
-      }, timelineRef)
-      return () => ctx.revert()
+    if (!heroUnlocked) return
+
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+    if (!isMobile) return
+
+    const forceScrollable = () => {
+      document.documentElement.style.overflowY = 'auto'
+      document.body.style.overflowY = 'auto'
+    }
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' &&
+            mutation.attributeName === 'style') {
+          const el = mutation.target
+          const computed = getComputedStyle(el)
+          if (computed.overflowY === 'hidden' ||
+              computed.overflow === 'hidden') {
+            forceScrollable()
+          }
+        }
+      })
     })
-    return () => mm.revert()
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['style']
+    })
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['style']
+    })
+
+    forceScrollable()
+    const t1 = setTimeout(forceScrollable, 100)
+    const t2 = setTimeout(forceScrollable, 300)
+    const t3 = setTimeout(forceScrollable, 500)
+
+    const t4 = setTimeout(() => {
+      observer.disconnect()
+    }, 2000)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
+      clearTimeout(t4)
+    }
+  }, [heroUnlocked])
+
+  // Timeline scroll-in - IntersectionObserver to avoid Lenis/ScrollTrigger conflict on mobile
+  useEffect(() => {
+    const entries = entryRefs.current.filter(Boolean)
+    if (!entries.length) return
+    const observer = new IntersectionObserver(
+      (observations) => {
+        observations.forEach((obs) => {
+          if (obs.isIntersecting) {
+            gsap.fromTo(obs.target,
+              { opacity: 0, y: 30 },
+              { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
+            )
+          } else {
+            gsap.to(obs.target, { opacity: 0, y: 30, duration: 0.4 })
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+    entries.forEach((entry) => observer.observe(entry))
+    return () => observer.disconnect()
   }, [])
 
   return (

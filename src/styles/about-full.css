@@ -10,9 +10,9 @@
   justify-content: center;
   background: #0a0a0a; /* always dark - hero is theme-independent */
   overflow: hidden;
-  /* Suppress native scroll on touch in CSS (compositor thread) so our
-     touchmove listener can run passive:true with no blocking */
-  touch-action: none;
+  /* touch-action: auto so the compositor never locks touch handling;
+     expansion is driven by JS passive listeners, not CSS blocking */
+  touch-action: auto;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: auto;
   transition: none; /* prevent any style transition delaying the touch-action override */
